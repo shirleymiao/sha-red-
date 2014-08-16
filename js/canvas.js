@@ -159,7 +159,18 @@ function verifyPIN() {
 }
 
 var loadBrackets = function(){
-	var imgInstance = new fabric.Image.fromURL('red_brackets.png', function(oImg) {
-  		canvas.add(oImg);
-	});
+	// var imgInstance = new fabric.Image.fromURL('red_brackets.png', function(oImg) {
+ //  		canvas.add(oImg);
+	// });
+	fabric.util.loadImage('red_brackets.png', function(img){
+		var object = new fabric.Image(img);
+		object.set({
+			left: 0,
+			top: 0
+		});
+	 	canvas.add(object);
+	 	canvas.renderAll();
+	 }, null, {crossOrigin: 'Anonymous'});
+
+	canvas.renderAll();
 }
