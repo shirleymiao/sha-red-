@@ -58,7 +58,7 @@ var loadImageCallback = function (src){
 			// }
 
 			if (currHeight < imgInstance.currentHeight || currWidth < imgInstance.currentWidth){
-				imgInstance.scale(.2);
+				imgInstance.scale(.8);
 			}
 
 			// //Setting absolute maximum height and width
