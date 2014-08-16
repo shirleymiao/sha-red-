@@ -140,7 +140,7 @@ function verifyPIN() {
 	// Inject PIN field
 	var PINField = $('<input id="pin-field"/>');
 	$("#image-container").append(PINField);
-	var PINSubmit = $('<button id="submitPIN">Submit</button>');
+	var PINSubmit = $('<button style="visibility:visible;" id="submitPIN">Submit</button>');
 	$("#image-container").append(PINSubmit);
 
 	var pinfield = $("#pin-field");
