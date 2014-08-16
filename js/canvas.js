@@ -50,6 +50,7 @@ var loadImageCallback = function (src){
 			if (currHeight < imgInstance.currentHeight || currWidth < imgInstance.currentWidth){
 				//var scaleFactor = 
 				imgInstance.scale(0.8);
+
 			}
 			// Redraw
 			canvas.renderAll();
