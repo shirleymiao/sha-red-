@@ -15,6 +15,9 @@ function initCanvas(){
 
 	// Listener for save button
 	$("#saveButton").click(saveImageCallback);
+
+	//Listener for adding parantheses
+	$("#brackets").click(loadBrackets);
 }
 
 // Callback for new file loaded from user's file system:
@@ -40,6 +43,16 @@ var loadImageCallback = function (src){
 			}
 			if (currWidth < imgInstance.currentWidth){
 				canvas.setWidth(imgInstance.currentWidth);
+			}
+
+			//Setting absolute maximum height and width
+			if (canvas.height > 600) {
+				canvas.setHeight(canvas.height*.2);
+				canvas.setWidth(canvas.width*.2);
+			}
+			if(canvas.width > 600) {
+				canvas.setHeight(canvas.height*.2);
+				canvas.setWidth(canvas.width*.2)
 			}
 
 			// Redraw
@@ -70,3 +83,9 @@ var saveImageCallback = function(ev){
 	});	
 	this.download = 'test.png';
 };
+
+var loadBrackets = function(){
+	var imgInstance = new fabric.Image.fromURL('red_brackets.png', function(oImg) {
+  	canvas.add(oImg);
+});
+}
