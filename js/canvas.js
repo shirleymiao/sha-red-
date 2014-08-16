@@ -47,44 +47,22 @@ var loadImageCallback = function (src){
 			var imgInstance = new fabric.Image(img);
 			canvas.add(imgInstance);
 
-
-
-			// // Update height and width of canvas if smaller than current image
-			// if (currHeight < imgInstance.currentHeight) {
-			// 	canvas.setHeight(imgInstance.currentHeight);
-			// }
-			// if (currWidth < imgInstance.currentWidth){
-			// 	canvas.setWidth(imgInstance.currentWidth);
-			// }
-
 			if (currHeight < imgInstance.currentHeight || currWidth < imgInstance.currentWidth){
-				imgInstance.scale(.2);
+				//var scaleFactor = 
+				imgInstance.scale(0.8);
 			}
-
-			// //Setting absolute maximum height and width
-			// if (canvas.height > 600) {
-			// 	canvas.setHeight(canvas.height*.2);
-			// 	canvas.setWidth(canvas.width*.2);
-			// }
-			// if(canvas.width > 600) {
-			// 	canvas.setHeight(canvas.height*.2);
-			// 	canvas.setWidth(canvas.width*.2)
-			// }
-
-
-
 			// Redraw
 			canvas.renderAll();
+			canvas.calcOffset();
 
-							//Make buttons appear
+			// Make buttons visible
+			var buttons = document.getElementsByTagName("button");
+			for(var i=0; i<buttons.length; i++){
+				buttons[i].style.visibility="visible";
+			}
 
-	var buttons = document.getElementsByTagName("button");
-	for(var i=0; i<buttons.length; i++){
-		buttons[i].style.visibility="visible";
-	}
-
-	//Make file uploader disappear
-	document.getElementById("form").style.visibility="hidden";
+			// Make file uploader disappear
+			document.getElementById("form").style.visibility="hidden";
 		}
 		img.crossOrigin = 'anonymous';
 		img.src = ev.target.result;
@@ -107,12 +85,10 @@ var removeImageCallback = function(){
 
 // Callback for saving current canvas to file system
 var saveImageCallback = function(ev){
-	console.log("save");
-	this.href = canvas.toDataURL({
-		format: 'jpeg',
-		quality: 0.8
-	});	
-	this.download = 'test.png';
+    var img = document.createElement("IMG");
+    img.src = canvas.toDataURL();
+
+    window.location.href = img.src.replace('image/png', 'image/octet-stream');  
 };
 
 // Callback for exporting current canvas to Twitter
@@ -155,12 +131,14 @@ function verifyPIN() {
 		        // store the authenticated token, which may be different from the request token (!)
 		        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
 		        var dataURL = canvas.toDataURL();
+
+		        // Split to remove string before 64 bit image encoding
 		        var res = dataURL.split(",");
 
 		        // Set parameters for image upload
 		        if (dataURL){
 			        var params = {
-			        	"status": "I HAZ A (RED) PHOTO LOLCATZ",
+			        	"status": "I believe in @RED's mission of creating an AIDS-free generation. #RED",
 			        	"media[]": res[1]
 			        };
 
@@ -189,7 +167,9 @@ var loadBrackets = function(){
 		});
 	 	canvas.add(object);
 	 	canvas.renderAll();
+	 	canvas.calcOffset();
 	 }, null, {crossOrigin: 'Anonymous'});
 
 	canvas.renderAll();
+	canvas.calcOffset();
 }
