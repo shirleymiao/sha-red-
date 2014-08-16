@@ -23,8 +23,9 @@
 
     #main-canvas {
         background-color: #BF1238;
-        width: 400px;
-        height: 400px;
+        width: 612px;
+        height: 612px;
+        border:5px solid black;
 
     }
     #imageLoader {
@@ -44,6 +45,22 @@
         height: 30px;
         border-radius: 50%;
     }
+    input{
+        width:77px;
+    }
+
+    button{
+        color:white;
+        background-color:#333333;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        border-radius:5%;
+        font-size: 14px;
+        font-weight:bold;
+        margin:2px;
+        border:0px;
+        visibility: hidden;
+    }
+
     </style>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js"></script>
     <script src="js/codebird.js"></script>
@@ -102,6 +119,8 @@
                 <!--ideas for expansion:  unlock new stickers or filters by making a donation
                 MAKE LINKS RED!!!!-->
                 <br>
+                <div id="form" class="form-group">
+                    <input type="file" name="imageLoader" id="imageLoader" title="Upload a photo to make yourself (RED)!"/> First, upload a photo.
                 <div id="image-container">
                     <p class="lead">Upload a photo to make yourself (RED)</p>
                     <div class="form-group">
@@ -112,9 +131,9 @@
                     <canvas id="main-canvas">   
 
                     </canvas>
-                    <button id="removeButton">Remove</button>
-                    <button id="saveButton">Save</button>
-                    <button id="tweetButton">Tweet</button>
+                    <button id="removeButton">Delete Selection</button>
+                    <button id="saveButton">Save to Computer</button>
+                    <button id="tweetButton">Tweet My Photo</button>
                 </div>
 
                 <!--should (RED) be red, should INSPIRED or inspired, is "buy red" the right way to say it, celeb pictures-->

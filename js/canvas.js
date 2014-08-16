@@ -47,26 +47,44 @@ var loadImageCallback = function (src){
 			var imgInstance = new fabric.Image(img);
 			canvas.add(imgInstance);
 
-			// Update height and width of canvas if smaller than current image
-			if (currHeight < imgInstance.currentHeight) {
-				canvas.setHeight(imgInstance.currentHeight);
-			}
-			if (currWidth < imgInstance.currentWidth){
-				canvas.setWidth(imgInstance.currentWidth);
+
+
+			// // Update height and width of canvas if smaller than current image
+			// if (currHeight < imgInstance.currentHeight) {
+			// 	canvas.setHeight(imgInstance.currentHeight);
+			// }
+			// if (currWidth < imgInstance.currentWidth){
+			// 	canvas.setWidth(imgInstance.currentWidth);
+			// }
+
+			if (currHeight < imgInstance.currentHeight || currWidth < imgInstance.currentWidth){
+				imgInstance.scale(.2);
 			}
 
-			//Setting absolute maximum height and width
-			if (canvas.height > 600) {
-				canvas.setHeight(canvas.height*.2);
-				canvas.setWidth(canvas.width*.2);
-			}
-			if(canvas.width > 600) {
-				canvas.setHeight(canvas.height*.2);
-				canvas.setWidth(canvas.width*.2)
-			}
+			// //Setting absolute maximum height and width
+			// if (canvas.height > 600) {
+			// 	canvas.setHeight(canvas.height*.2);
+			// 	canvas.setWidth(canvas.width*.2);
+			// }
+			// if(canvas.width > 600) {
+			// 	canvas.setHeight(canvas.height*.2);
+			// 	canvas.setWidth(canvas.width*.2)
+			// }
+
+
 
 			// Redraw
 			canvas.renderAll();
+
+							//Make buttons appear
+
+	var buttons = document.getElementsByTagName("button");
+	for(var i=0; i<buttons.length; i++){
+		buttons[i].style.visibility="visible";
+	}
+
+	//Make file uploader disappear
+	document.getElementById("form").style.visibility="hidden";
 		}
 		img.crossOrigin = 'anonymous';
 		img.src = ev.target.result;
@@ -76,6 +94,7 @@ var loadImageCallback = function (src){
 	for (var i = 0; i < src.target.files.length; i++){
 		reader.readAsDataURL(src.target.files[i]);
 	}
+
 };
 
 // Callback for removing an image, if one is currently selected on button press.
