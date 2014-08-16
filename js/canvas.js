@@ -148,6 +148,7 @@ function verifyPIN() {
 			        	params,
 			        	function (reply) {
 			        		console.log(reply);
+			        		$("#image-container").append("<br><br>Thanks for submitting for AIDS awareness.");
 	    				}
 			        );
 		    	}
@@ -156,10 +157,8 @@ function verifyPIN() {
 	});
 }
 
+// Load (RED) parentheses from image to canvas to overlay over faces
 var loadBrackets = function(){
-	// var imgInstance = new fabric.Image.fromURL('red_brackets.png', function(oImg) {
- //  		canvas.add(oImg);
-	// });
 	fabric.util.loadImage('red_brackets.png', function(img){
 		var object = new fabric.Image(img);
 		object.set({
