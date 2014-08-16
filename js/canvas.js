@@ -1,5 +1,8 @@
+// Declare global variables
 var canvas;
+var cb;
 
+// Called on document load
 function initCanvas(){
 	canvas = new fabric.Canvas('main-canvas');
 
@@ -7,6 +10,11 @@ function initCanvas(){
 	canvas.setWidth(400);
 	canvas.renderAll();
 
+	// Init codebird.js
+	cb = new Codebird;
+    
+    cb.setConsumerKey("i3BDCq9mxkjnYBGXV8G00jmr8", "vGz2ZDXjKouT4jSCryW20LWASm0gS9dxvoFkLv7R6vTDDTA0uG");
+    //cb.setUseProxy(false);
 	// Listener for new file loaded from user's file system
 	$("#imageLoader").change(loadImageCallback);
 
@@ -15,6 +23,8 @@ function initCanvas(){
 
 	// Listener for save button
 	$("#saveButton").click(saveImageCallback);
+
+	$("#tweetButton").click(exportToTwitter);
 }
 
 // Callback for new file loaded from user's file system:
@@ -45,6 +55,7 @@ var loadImageCallback = function (src){
 			// Redraw
 			canvas.renderAll();
 		}
+		img.crossOrigin = 'anonymous';
 		img.src = ev.target.result;
 	}
 
@@ -62,6 +73,7 @@ var removeImageCallback = function(){
 	}
 };
 
+// Callback for saving current canvas to file system
 var saveImageCallback = function(ev){
 	console.log("save");
 	this.href = canvas.toDataURL({
@@ -70,3 +82,65 @@ var saveImageCallback = function(ev){
 	});	
 	this.download = 'test.png';
 };
+
+// Callback for exporting current canvas to Twitter
+var exportToTwitter = function(ev) {
+	cb.__call(
+    	"oauth_requestToken",
+    	{oauth_callback: "oob"},
+    	function (reply) {
+    		cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+    		// gets the authorize screen URL
+	        cb.__call(
+	            "oauth_authorize",
+	            {},
+	            function (auth_url) {
+	                window.codebird_auth = window.open(auth_url);
+	                verifyPIN();
+	            }
+	        );
+    	}
+    );
+};
+
+// Inserts field and button for submitting PINs 
+function verifyPIN() {
+	// Inject PIN field
+	var PINField = $('<input id="pin-field"/>');
+	$("#image-container").append(PINField);
+	var PINSubmit = $('<button id="submitPIN">Submit</button>');
+	$("#image-container").append(PINSubmit);
+
+	var pinfield = $("#pin-field");
+	var button = $("#submitPIN");
+
+	// Listener for PIN Submit
+	button.click(function(){
+		cb.__call(
+			"oauth_accessToken",
+		    {oauth_verifier: pinfield.val()},
+		    function (reply) {
+		        // store the authenticated token, which may be different from the request token (!)
+		        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+		        var dataURL = canvas.toDataURL();
+		        var res = dataURL.split(",");
+
+		        // Set parameters for image upload
+		        if (dataURL){
+			        var params = {
+			        	"status": "I HAZ A (RED) PHOTO LOLCATZ",
+			        	"media[]": res[1]
+			        };
+
+			        cb.__call(
+			        	"statuses_updateWithMedia",
+			        	params,
+			        	function (reply) {
+			        		console.log(reply);
+	    				}
+			        );
+		    	}
+		    }
+		);
+	});
+}
