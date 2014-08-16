@@ -22,15 +22,31 @@
     }
 
     #main-canvas {
-      background-color: red;
-      width: 400px;
-      height: 400px;
-      z-index: 100;
+        background-color: #BF1238;
+        width: 400px;
+        height: 400px;
+
+    }
+    #imageLoader {
+        display: block;
+        margin : 0 auto;
+    }
+    .canvas-container {
+        margin: 0 auto;
+    }
     .banner{
         max-width:100%;
         max-height:auto;
     }
+
+    .button {
+        width: 150px;
+        height: 30px;
+        border-radius: 50%;
+    }
     </style>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js"></script>
+    <script src="js/canvas.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,11 +94,16 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h1><img src="filtered_banner.png" class="banner"></h1>
-                <p class="lead">Complete with pre-defined file paths that you won't have to change!</p>
+                <p class="lead">Upload a photo to make yourself (RED)</p>
+                <div class="form-group">
+                    <input type="file" name="imageLoader" id="imageLoader"/>
+                </div>
                 <canvas id="main-canvas">   
 
                 </canvas>
-               
+                <button id="removeButton">Remove</button>
+                <button id="saveButton">saveButton</button>
+
                 
             </div>
         </div>
@@ -96,6 +117,9 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        initCanvas();
+    </script>
 
 </body>
 
