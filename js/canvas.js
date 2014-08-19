@@ -13,7 +13,7 @@ function initCanvas(){
 	// Init codebird.js
 	cb = new Codebird;
     
-    cb.setConsumerKey("i3BDCq9mxkjnYBGXV8G00jmr8", "vGz2ZDXjKouT4jSCryW20LWASm0gS9dxvoFkLv7R6vTDDTA0uG");
+    cb.setConsumerKey("QUX0146spjkpm3MywalTpkDn1", "z8mZGsonuyLcBWbQ7CRfPDeZ2mooatwHzvfnzOLGqjCgwqzCld");
     //cb.setUseProxy(false);
 	// Listener for new file loaded from user's file system
 	$("#imageLoader").change(loadImageCallback);
